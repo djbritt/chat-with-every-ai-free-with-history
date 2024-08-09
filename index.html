@@ -67,6 +67,9 @@ body, html {
   color: white;
   border: 1px solid #565869;
   border-radius: 5px;
+  resize: vertical;
+  min-height: 50px;
+  max-height: 200px;
 }
 
 #sendButton {
@@ -271,7 +274,7 @@ body, html {
     <div class="chat-area" id="chat-area">
       <!-- Chat messages will be inserted here -->
     </div>
-    <input type="text" id="userInput" placeholder="Type your message here...">
+    <textarea id="userInput" placeholder="Type your message here..."></textarea>
     <button id="sendButton">Send</button>
     <select id="modelSelect">
       <option value="">Loading models...</option>
@@ -483,8 +486,9 @@ function sendMessage() {
 }
 
 document.getElementById('sendButton').addEventListener('click', sendMessage);
-document.getElementById('userInput').addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
+document.getElementById('userInput').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
     sendMessage();
   }
 });
